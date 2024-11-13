@@ -1,0 +1,29 @@
+services:
+  db-server:
+    image: postgres:latest
+    container_name: db-server
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgre
+    ports:
+      - 15432:5432
+    restart:
+      unless-stopped
+    networks:
+      - spring-cloud-network
+  financicalmanagement:
+    container_name: financicalmanagement
+    build:
+      dockerfile: Dockerfile
+    image: financicalmanagement:latest
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db-server/postgres
+    ports:
+      - 8080:8080
+    depends_on:
+      - db-server
+    networks:
+      - spring-cloud-network
+networks:
+  spring-cloud-network:
+    driver: bridge

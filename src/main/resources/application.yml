@@ -1,0 +1,43 @@
+# HTTP port for incoming requests
+server:
+  port: 8080
+  context-path: /
+
+#db related settings
+spring:
+  jpa:
+    database: PostgreSQL
+    show-sql: true
+
+    # Bot db
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    driver: org.postgresql.Driver
+    username: postgres
+    password: postgre
+    pool-size: 10
+
+  # liquibase
+  liquibase:
+    enabled: true
+    changeLog: classpath:config/liquibase/master.xml
+    drop-first: false
+
+# logging
+logging:
+  file:
+    name: logs/application-log.log
+    max-size: 1024KB     # Roll the log file when it reaches max size
+    max-history: 50      # Limit the number of log files retained
+
+  pattern:
+    console: "%d %-5level %logger : %msg%n"
+    file: "%d %-5level %logger : %msg%n"
+
+  level:
+    root: INFO
+    org.springframework: ERROR
+    org.apache.http: DEBUG
+
+
+

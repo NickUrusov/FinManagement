@@ -1,0 +1,41 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+    <changeSet id="20241113-1" author="urusov">
+        <createTable tableName="tpp_reports">
+            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="start_date" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+            <column name="end_date" type="timestamp">
+                <constraints nullable="false" />
+                </column>
+            <column name="total_income" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="total_expense" type="bigint">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="addFKReports" author="urusov">
+        <addForeignKeyConstraint  baseColumnNames="user_id"
+                                  baseTableName="tpp_reports"
+                                  constraintName="fk_reports_user_id"
+                                  deferrable="true"
+                                  initiallyDeferred="true"
+                                  onDelete="CASCADE"
+                                  onUpdate="RESTRICT"
+                                  referencedColumnNames="id"
+                                  referencedTableName="tpp_user"
+                                  validate="true"/>
+    </changeSet>
+
+</databaseChangeLog>
